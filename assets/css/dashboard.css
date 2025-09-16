@@ -1,0 +1,138 @@
+:root {
+  --primary: #2b6cb0;
+  --secondary: #4299e1;
+  --dark: #2d3748;
+  --light: #f7fafc;
+  --success: #48bb78;
+  --warning: #ed8936;
+  --danger: #f56565;
+  --info: #38b2ac;
+  --sidebar-width: 280px;
+}
+
+/* Layout modernisé */
+.dashboard-app {
+  display: flex;
+  min-height: 100vh;
+  background: #f0f4f8;
+}
+
+.sidebar-modern {
+  width: var(--sidebar-width);
+  background: white;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+}
+
+.main-content-modern {
+  flex: 1;
+  padding: 2rem;
+}
+
+/* Cartes modernes */
+.stats-card {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  transition: transform 0.3s;
+  border-left: 4px solid var(--primary);
+}
+
+.stats-card:hover {
+  transform: translateY(-5px);
+}
+
+.stats-card h3 {
+  font-size: 1.8rem;
+  color: var(--dark);
+  margin: 0.5rem 0;
+}
+
+.stats-card p {
+  color: #718096;
+  margin-bottom: 1rem;
+}
+
+.stats-card .card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--secondary);
+  font-weight: 600;
+}
+
+/* Navigation moderne */
+.nav-modern {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.nav-modern a {
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  color: #4a5568;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  transition: all 0.3s;
+}
+
+.nav-modern a:hover, .nav-modern a.active {
+  background: #ebf8ff;
+  color: var(--primary);
+}
+
+.nav-modern a i {
+  width: 24px;
+  text-align: center;
+}
+
+/* Grille responsive */
+.grid-modern {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+/* Header moderne */
+.dashboard-header-modern {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+/* Tableau moderne */
+.table-modern {
+  width: 100%;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.table-modern th {
+  background: #edf2f7;
+  padding: 1rem;
+  text-align: left;
+}
+
+.table-modern td {
+  padding: 1rem;
+  border-bottom: 1px solid #edf2f7;
+}
+
+/* Bouton moderne */
+.btn-modern {
+  background: var(--primary);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+}

@@ -1,0 +1,249 @@
+:root {
+  --primary: #2b6cb0;
+  --secondary: #4299e1;
+  --dark: #2d3748;
+  --light: #f7fafc;
+  --success: #48bb78;
+  --warning: #ed8936;
+  --danger: #f56565;
+  --info: #38b2ac;
+  --border: #e2e8f0;
+  --sidebar-width: 260px;
+}
+
+/* Layout général */
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  background: #f0f4f8;
+  color: var(--dark);
+}
+
+.dashboard-app {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar-modern {
+  width: var(--sidebar-width);
+  background: #ffffff;
+  padding: 1.5rem 1rem;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.08);
+  position: fixed;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.sidebar-modern .logo {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.sidebar-modern .logo img {
+  max-width: 70%;
+  height: auto;
+}
+
+.nav-modern {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.nav-modern a {
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  color: #4a5568;
+  text-decoration: none;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: 0.2s ease;
+}
+
+.nav-modern a:hover,
+.nav-modern a.active {
+  background: #ebf8ff;
+  color: var(--primary);
+}
+
+.nav-modern i {
+  width: 20px;
+  text-align: center;
+}
+
+/* Main content */
+.main-content-modern {
+  margin-left: var(--sidebar-width);
+  padding: 2rem;
+  flex: 1;
+}
+
+/* Header */
+.dashboard-header-modern {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.dashboard-header-modern h1 {
+  font-size: 1.75rem;
+  font-weight: bold;
+}
+
+/* Notification icon */
+.notif-icon {
+  position: relative;
+  cursor: pointer;
+}
+
+.notif-icon .badge {
+  position: absolute;
+  top: -5px;
+  right: -8px;
+  background-color: var(--danger);
+  color: white;
+  font-size: 0.7rem;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Dropdown */
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: 8px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  width: 320px;
+  max-height: 350px;
+  overflow-y: auto;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  display: none;
+  z-index: 1000;
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-header {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+  background: #f7fafc;
+}
+
+.dropdown-item {
+  padding: 1rem;
+  font-size: 0.95rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--dark);
+  transition: background 0.2s;
+}
+
+.dropdown-item:hover {
+  background: #f0f4f8;
+}
+
+/* Stat cards */
+.grid-modern {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.stats-card {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.04);
+  border-left: 4px solid var(--primary);
+  transition: transform 0.2s;
+}
+
+.stats-card:hover {
+  transform: translateY(-4px);
+}
+
+.stats-card h3 {
+  font-size: 1rem;
+  color: #6c757d;
+  margin-bottom: 0.25rem;
+}
+
+.stats-card p {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: var(--dark);
+}
+
+/* Table */
+.table-modern {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2rem;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.table-modern th,
+.table-modern td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.table-modern th {
+  background-color: #edf2f7;
+  color: #4a5568;
+}
+
+.table-modern tr:hover {
+  background: #f9fafb;
+}
+
+/* Action links */
+.action-link {
+  color: var(--primary);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.action-link:hover {
+  text-decoration: underline;
+}
+
+/* Empty state */
+.empty-state {
+  padding: 2rem;
+  text-align: center;
+  color: #718096;
+}
+
+/* Boutons */
+.btn-modern {
+  padding: 0.5rem 1rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.btn-modern:hover {
+  background: var(--secondary);
+}
