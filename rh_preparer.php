@@ -23,27 +23,32 @@ function getPersonnelsService($pdo, $service_id) {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-// Vérifie si un personnel est déjà affecté à une mission RH
 function isPersonnelEnMission($pdo, $personnel_id) {
+    $today = date('Y-m-d');
     $stmt = $pdo->prepare("
         SELECT 1 FROM missions
-        WHERE lancement = 1 AND rh_preparer = 1 AND FIND_IN_SET(:pid, personnels) > 0
+        WHERE lancement = 1 
+          AND rh_preparer = 1
+          AND FIND_IN_SET(:pid, personnels) > 0
+          AND (date_fin IS NULL OR date_fin >= :today)
         LIMIT 1
     ");
-    $stmt->execute([':pid' => $personnel_id]);
+    $stmt->execute([':pid' => $personnel_id, ':today' => $today]);
     return $stmt->fetchColumn() ? true : false;
 }
 
-// Récupérer missions à préparer
+// Récupérer missions à préparer avec service
 $stmt = $pdo->query("
-    SELECT * 
-    FROM missions
-    WHERE lancement = 1
-      AND dir_service_validation = 1
-      AND (rh_preparer IS NULL OR rh_preparer = 0)
-    ORDER BY date_debut DESC
+    SELECT m.*, s.nom AS service_nom
+    FROM missions m
+    LEFT JOIN services s ON m.service_id = s.id
+    WHERE m.lancement = 1
+      AND m.dir_service_validation = 1
+      AND (m.rh_preparer IS NULL OR m.rh_preparer = 0)
+    ORDER BY m.date_debut DESC
 ");
 $missions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 
 // Traitement formulaire
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mission_id'])) {
@@ -122,6 +127,8 @@ button:hover { background-color:#1f5c8b; }
 <?php foreach($missions as $mission): ?>
 <div class="mission">
     <h2><?= htmlspecialchars($mission['titre']) ?></h2>
+<p><strong>Service :</strong> <?= htmlspecialchars($mission['service_nom'] ?? 'Non défini') ?></p>
+
 
     <form method="POST">
         <input type="hidden" name="mission_id" value="<?= $mission['id'] ?>">

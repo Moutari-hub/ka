@@ -15,8 +15,13 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 
 $mission_id = (int)$_GET['id'];
 
-// Récupère la mission
-$stmt = $pdo->prepare("SELECT * FROM missions WHERE id = ?");
+// Récupère la mission avec le service
+$stmt = $pdo->prepare("
+    SELECT m.*, s.nom AS service_nom
+    FROM missions m
+    LEFT JOIN services s ON m.service_id = s.id
+    WHERE m.id = ?
+");
 $stmt->execute([$mission_id]);
 $mission = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -39,6 +44,20 @@ function getPersonnelsInfo($pdo, $ids_str) {
     }
     return implode(', ', $res);
 }
+
+// Fonction badge état
+function renderEtatBadge($statut, $date_fin) {
+    $today = date('Y-m-d');
+    $etat = "En attente"; $class="etat gris";
+
+    if ($statut === "Rejetée") { $etat="Rejetée"; $class="etat rouge"; }
+    elseif ($statut === "Validée") { $etat="Validée"; $class="etat bleu"; }
+    elseif ($statut === "Lancée") { $etat="Lancée"; $class="etat violet"; }
+    elseif ($statut === "En cours" && $date_fin >= $today) { $etat="En cours"; $class="etat orange"; }
+    elseif ($date_fin < $today) { $etat="Terminée"; $class="etat vert"; }
+
+    return "<span class='$class'>$etat</span>";
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -59,6 +78,15 @@ header h1 { font-size:1.8rem; margin:0; flex-grow:1; }
 .card th { width:200px; background:#f0f9f5; color:#026c34; }
 .card a { color:#026c34; text-decoration:none; }
 .card a:hover { text-decoration:underline; }
+
+/* Styles badges état */
+.etat { padding:4px 8px; border-radius:4px; color:#fff; font-weight:bold; }
+.etat.vert { background:#28a745; }
+.etat.orange { background:#fd7e14; }
+.etat.rouge { background:#dc3545; }
+.etat.bleu { background:#007bff; }
+.etat.violet { background:#6f42c1; }
+.etat.gris { background:#6c757d; }
 </style>
 </head>
 <body>
@@ -74,12 +102,13 @@ header h1 { font-size:1.8rem; margin:0; flex-grow:1; }
     <h2>Informations générales</h2>
     <table>
         <tr><th>Titre</th><td><?= htmlspecialchars($mission['titre']) ?></td></tr>
+        <tr><th>Service</th><td><?= htmlspecialchars($mission['service_nom'] ?? '-') ?></td></tr>
         <tr><th>Zone</th><td><?= htmlspecialchars($mission['zone_mission']) ?></td></tr>
         <tr><th>Date de début</th><td><?= $mission['date_debut'] ?></td></tr>
         <tr><th>Date de fin</th><td><?= $mission['date_fin'] ?></td></tr>
         <tr><th>Montant prévu</th><td><?= number_format($mission['montant_prevu'],0,',',' ') ?> XOF</td></tr>
         <tr><th>Montant utilisé</th><td><?= number_format($mission['montant_utilise'],0,',',' ') ?> XOF</td></tr>
-        <tr><th>Statut</th><td><?= htmlspecialchars($mission['statut']) ?></td></tr>
+        <tr><th>État</th><td><?= renderEtatBadge($mission['statut'], $mission['date_fin']) ?></td></tr>
     </table>
 </div>
 

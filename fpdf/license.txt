@@ -4,3 +4,11 @@ copies of the software, and to permit persons to whom the software is furnished
 to do so.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED.
+new Chart(document.getElementById('chartGlobal'), {
+    type: 'bar',
+    data: {
+        labels: <?= json_encode($chart_global_labels) ?>,
+        datasets: [{ label:'Missions', data: <?= json_encode($chart_global_data) ?> }]
+    },
+    options:{ responsive:true, plugins:{ legend:{display:false} } }
+});
